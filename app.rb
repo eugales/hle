@@ -24,7 +24,7 @@ class Correction
             "Twp" => "Township",
             "Hwy" => "Highway",
             # "U" => "You",
-            "CCH" => "Commerce Clearing House"
+            # "CCH" => "Commerce Clearing House"
         }
         abbrs.each { |k,v| @name.gsub!(k,v)}
     end
