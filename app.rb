@@ -76,7 +76,8 @@ client = Mysql2::Client.new(
     password: ENV['PASSWORD'], 
 )
 client.query("delete from hle_dev_test_adil_mamyrkhanov where candidate_office_name = '';")
-table = client.query("select id, candidate_office_name from hle_dev_test_adil_mamyrkhanov a;")
+table = client.query("select id, candidate_office_name from hle_dev_test_adil_mamyrkhanov a;", :cast => false)
+
 table.each_with_index do |row, i|
     id = row['id']
     name = row['candidate_office_name']
@@ -93,7 +94,12 @@ updating_client = Mysql2::Client.new(
     password: ENV['PASSWORD'], 
     flags: Mysql2::Client::MULTI_STATEMENTS
 )
+puts 'Update statements sent to MySQL, wait...'
 updating_client.query(update_query)
+while updating_client.next_result
+  result = updating_client.store_result
+  puts 'Result: ' + result
+end
 updating_client.close
 update_query = ''
 
