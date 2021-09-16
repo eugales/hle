@@ -84,34 +84,19 @@ table.each_with_index do |row, i|
     clean_name = Correction.new(name).perform
     sentence = "The candidate is running for the #{clean_name} office"
     update_query += "update hle_dev_test_adil_mamyrkhanov set clean_name=\"%s\", sentence=\"%s\" where id = %s;\n" % [clean_name, sentence, id.to_s]
-
-    if i % 100 > 98
-        updating_client = Mysql2::Client.new(
-            host: ENV['HOST'], 
-            database: ENV['DATABASE'], 
-            username: ENV['USERNAME'], 
-            password: ENV['PASSWORD'], 
-            flags: Mysql2::Client::MULTI_STATEMENTS
-        )
-        updating_client.query(update_query)
-        updating_client.close
-        update_query = ''
-    end
 end
 
+updating_client = Mysql2::Client.new(
+    host: ENV['HOST'], 
+    database: ENV['DATABASE'], 
+    username: ENV['USERNAME'], 
+    password: ENV['PASSWORD'], 
+    flags: Mysql2::Client::MULTI_STATEMENTS
+)
+updating_client.query(update_query)
+updating_client.close
+update_query = ''
 
-unless update_query.empty?
-    updating_client = Mysql2::Client.new(
-        host: ENV['HOST'], 
-        database: ENV['DATABASE'], 
-        username: ENV['USERNAME'], 
-        password: ENV['PASSWORD'], 
-        flags: Mysql2::Client::MULTI_STATEMENTS
-    )
-    updating_client.query(update_query)
-    updating_client.close
-    update_query = ''
-end
 
 
 
