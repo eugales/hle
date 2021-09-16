@@ -96,6 +96,7 @@ table.each_with_index do |row, i|
         )
         updating_client.query(update_query)
         updating_client.close
+        update_query = ''
     end
 end
 
