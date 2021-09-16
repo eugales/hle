@@ -100,4 +100,18 @@ table.each_with_index do |row, i|
 end
 
 
+unless update_query.empty?
+    updating_client = Mysql2::Client.new(
+        host: ENV['HOST'], 
+        database: ENV['DATABASE'], 
+        username: ENV['USERNAME'], 
+        password: ENV['PASSWORD'], 
+        flags: Mysql2::Client::MULTI_STATEMENTS
+    )
+    updating_client.query(update_query)
+    updating_client.close
+    update_query = ''
+end
+
+
 
