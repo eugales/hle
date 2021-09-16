@@ -94,12 +94,15 @@ updating_client = Mysql2::Client.new(
     password: ENV['PASSWORD'], 
     flags: Mysql2::Client::MULTI_STATEMENTS
 )
-puts 'Update statements sent to MySQL, wait...'
+print 'Update statements sent to MySQL, wait...'
 updating_client.query(update_query)
 while updating_client.next_result
-  result = updating_client.store_result
-  puts "Result: #{result}" 
+  @result = updating_client.store_result
+  sleep 3
+  print '.'
 end
+puts @result
+puts "Done!"
 updating_client.close
 update_query = ''
 
