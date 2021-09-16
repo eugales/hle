@@ -98,7 +98,7 @@ puts 'Update statements sent to MySQL, wait...'
 updating_client.query(update_query)
 while updating_client.next_result
   result = updating_client.store_result
-  puts 'Result: ' + result
+  puts "Result: #{result}" 
 end
 updating_client.close
 update_query = ''
