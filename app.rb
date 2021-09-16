@@ -42,7 +42,7 @@ class Correction
             if p.include? ?,
                 comma_parts = p.split(',').map(&:strip)
                 comma_parts.first.downcase!
-                comma_parts[comma_parts.length] = comma_parts.last.prepend('(') << ')'
+                comma_parts[comma_parts.length-1] = comma_parts.last.prepend('(') << ')'
                 p = comma_parts.join(' ')
             end
             p
