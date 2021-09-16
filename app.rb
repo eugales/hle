@@ -57,7 +57,7 @@ class Correction
 
     def normalize
         @parts.map { |p| p.downcase! } if @parts.length == 1
-        @parts.drop(1).map { |p| p.downcase! } if @parts.length > 1 && !['(', ')'].any? { |char| @name.include?(char) }
+        @parts.drop(1).map { |p| p.downcase! } if @parts.length > 1 && !@name.match(/[()]/)
         @parts.insert(-2, 'and') if @parts.length > 2
         @name = @parts.join(' ')
         max = @name.scan(/\S+/).length
