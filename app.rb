@@ -23,8 +23,8 @@ class Correction
         abbrs = {
             "Twp" => "Township",
             "Hwy" => "Highway",
-            "U" => "You",
-            "CH" => "Chapter"
+            # "U" => "You",
+            "CCH" => "Commerce Clearing House"
         }
         abbrs.each { |k,v| @name.gsub!(k,v)}
     end
@@ -38,7 +38,7 @@ class Correction
     end
 
     def add_parentheses
-        @parts.map do |p|
+        @parts = @parts.map do |p|
             if p.include? ?,
                 comma_parts = p.split(',').map(&:strip)
                 comma_parts.first.downcase!
@@ -62,7 +62,7 @@ class Correction
         @name = @parts.join(' ')
         max = @name.scan(/\S+/).length
         1.upto(max).each_with_object(@name) do |n, s| 
-            s.gsub!(/((?:\b\s*\S+){#{n}})\1/i, '\1')
+            s.gsub!(/((?:\b\s*[A-z]+){#{n}})\1/i, '\1')
         end
     end
 end
