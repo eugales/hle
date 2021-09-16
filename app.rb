@@ -84,7 +84,7 @@ table.each_with_index do |row, i|
 
     clean_name = Correction.new(name).perform
     sentence = "The candidate is running for the #{clean_name} office"
-    update_query += "update hle_dev_test_adil_mamyrkhanov set clean_name=\'%s\', sentence=\'%s\' where id = %s;\n" % [clean_name, sentence, id.to_s]
+    update_query += "update hle_dev_test_adil_mamyrkhanov set clean_name=\"%s\", sentence=\"%s\" where id = %s;\n" % [clean_name, sentence, id.to_s]
 
     if i % 60 > 58
         updating_client = Mysql2::Client.new(
